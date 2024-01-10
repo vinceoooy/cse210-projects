@@ -46,6 +46,7 @@ class Program
 
                 // Stretch Challenge
                 bool playResponse = false;
+                do
                 {
                     Console.Write("Would you like to play again? (Yes or No): ");
                     string playAgain = Console.ReadLine();
@@ -61,7 +62,7 @@ class Program
                     }
                     else
                     {
-                        Console.WriteLine("Invalid Response! Please answer with a 'Yes' or 'No'.");
+                        Console.WriteLine("Invalid Response! Please answer with a 'Yes' or 'No'");
                         playResponse = false;
                     }
                 } while (!playResponse); //wrong input for Yes or No
