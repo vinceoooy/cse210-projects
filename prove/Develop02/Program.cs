@@ -141,7 +141,7 @@ class Journal
         string filename = Console.ReadLine();
 
         // Showing Creativity and Exceeding Requirements
-        // If journal is saved to comma-separated values (.csv) and (.txt)
+        // If journal is saved to comma-separated values (.csv)
         // commas in responds is replace with semicolons ";"
         if (filename.EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
         {
