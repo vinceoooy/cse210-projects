@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 // Main 
 class Program
@@ -57,11 +59,13 @@ class Program
 
 
 // A class models the responsibilities of an entry
-class JournalEntry{
-    public string Prompt {get; set;}
-    public string Response {get; set;}
-    public string Date {get; set;}
-        public JournalEntry(string prompt, string response, string date)
+class JournalEntry
+{
+    public string Prompt { get; set; }
+    public string Response { get; set; }
+    public string Date { get; set; }
+
+    public JournalEntry(string prompt, string response, string date)
     {
         Prompt = prompt;
         Response = response;
@@ -72,11 +76,11 @@ class JournalEntry{
 // A class models the responsibilities of a journal
 class Journal
 {
-    private List<JournalEntry> entries;
+    private List<JournalEntry> _entries;
 
     public Journal()
     {
-        entries = new List<JournalEntry>();
+        _entries = new List<JournalEntry>();
     }
 
     public void WriteNewEntry()
@@ -89,20 +93,19 @@ class Journal
         string response = Console.ReadLine();
 
         // Save the entry
-        entries.Add(new JournalEntry(randomPrompt, response, DateTime.Now.ToShortDateString()));
+        _entries.Add(new JournalEntry(randomPrompt, response, DateTime.Now.ToShortDateString()));
     }
 
     public void DisplayJournal()
     {
         //Iterate through all entries in the journal and display them to the screen.
-        foreach (var entry in entries)
+        foreach (var entry in _entries)
         {
             Console.WriteLine($"Date: {entry.Date} - Prompt: {entry.Prompt}");
             Console.WriteLine(entry.Response);
             Console.WriteLine();
         }
     }
-
 
     public void LoadJournalFromFile()
     {
@@ -112,15 +115,16 @@ class Journal
         if (File.Exists(filename))
         {
             //While loading file, existing entries will clear
-            entries.Clear();
+            _entries.Clear();
 
             // Load entries from the file
             string[] lines = File.ReadAllLines(filename);
 
+            // reading variables that are comma separated
             foreach (var line in lines)
             {
                 string[] parts = line.Split(",");
-                entries.Add(new JournalEntry(parts[1], parts[2], parts[0]));
+                _entries.Add(new JournalEntry(parts[1], parts[2], parts[0]));
             }
 
             Console.WriteLine("Journal loaded successfully.");
@@ -130,7 +134,7 @@ class Journal
             Console.WriteLine("File not found. Please make sure the filename is correct.");
         }
     }
-    
+
     public void SaveJournalToFile()
     {
         Console.Write("Enter the filename to save the journal: ");
@@ -140,48 +144,64 @@ class Journal
         // If journal is saved to comma-separated values (.csv) and (.txt)
         // commas in responds is replace with semicolons ";"
         if (filename.EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
+        {
+            using (StreamWriter outputFile = new StreamWriter(filename))
             {
-                using (StreamWriter outputFile = new StreamWriter(filename))
+                foreach (var entry in _entries)
                 {
-                    foreach (var entry in entries)
-                    {
-                        // Saving entry to the file
-                        outputFile.WriteLine($"{entry.Date},{entry.Prompt},{entry.Response.Replace(",", ";")}");
-                    }
+                    // Saving entry to the file
+                    outputFile.WriteLine($"{entry.Date},{entry.Prompt},{entry.Response.Replace(",", ";")}");
                 }
             }
+        }
         else if (filename.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
+        {
+            using (StreamWriter outputFile = new StreamWriter(filename))
             {
-                using (StreamWriter outputFile = new StreamWriter(filename))
+                foreach (var entry in _entries)
                 {
-                    foreach (var entry in entries)
-                    {
-                        // Saving entry to the file
-                        outputFile.WriteLine($"{entry.Date},{entry.Prompt},{entry.Response.Replace(",", ";")}");
-                    }
+                    // Saving entry to the file
+                    outputFile.WriteLine($"{entry.Date},{entry.Prompt},{entry.Response.Replace(",", ";")}");
                 }
             }
-
+        }
         else
+        {
+            using (StreamWriter outputFile = new StreamWriter(filename))
             {
-                using (StreamWriter outputFile = new StreamWriter(filename))
+                foreach (var entry in _entries)
                 {
-                    foreach (var entry in entries)
-                    {
-                        // Save entry to the file
-                        outputFile.WriteLine($"{entry.Date},{entry.Prompt},{entry.Response}");
-                    }
+                    // Save entry to the file
+                    outputFile.WriteLine($"{entry.Date},{entry.Prompt},{entry.Response}");
                 }
             }
+        }
         Console.WriteLine("Journal saved successfully.");
     }
-    
-
 
     private string GetRandomPrompt()
     {
-        
+        List<string> prompts = new List<string>
+        {
+            // example prompts
+            "Who was the most interesting person I interacted with today?",
+            "What was the best part of my day?",
+            "How did I see the hand of the Lord in my life today?",
+            "What was the strongest emotion I felt today?",
+            "If I had one thing I could do over today, what would it be?",
 
-        return "Sample Prompt"; 
+            // own additional prompts 
+            "What did you eat?",
+            "Describe yourself in 3 words",
+            "What am I grateful for today",
+            "What emotions did you experience today, and why?",
+            "What did you accomplish today?",
+            "Recall a special moment from the past week and capture it in detail.",
+        };
+
+        Random listNumber = new Random();
+        int randomIndex = listNumber.Next(prompts.Count);
+
+        return prompts[randomIndex];
     }
 }
