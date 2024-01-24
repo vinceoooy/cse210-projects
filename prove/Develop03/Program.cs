@@ -7,7 +7,7 @@ class Program
     static void Main()
     {
         // Showing Creativity and Exceeding Requirements (Have the program to load scriptures from a files.)    
-        // reading a choosing random verse from a file
+        // reading and choosing random verse from a file
         string filePath = "scripture.txt";
         List<string> scriptureMastery = new List<string>(File.ReadAllLines(filePath));
         Random random = new Random();
