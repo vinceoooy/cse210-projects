@@ -1,0 +1,4 @@
+100
+SimpleGoal,Give a talk,Speak in Sarament meeting when asked,100,true
+EternalGoal,Study the scriptures,Study for atleast 10 minutes,50
+ChecklistGoal,Attend the temple,Attend and perform any ordinance,50,0,3,3
