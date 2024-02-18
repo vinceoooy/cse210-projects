@@ -7,6 +7,7 @@ class Program
     {
         List<Shape> shapes = new List<Shape>();
 
+        // Main method demonstrating polymorphism
         // Create instances of each shape and add them to the list
         shapes.Add(new Square("Red", 5.0));
         shapes.Add(new Rectangle("Blue", 4.0, 6.0));
