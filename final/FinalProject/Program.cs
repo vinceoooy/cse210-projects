@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-class Program
+public class Program
 {
-    static void Main()
+    public static void Main()
     {
         // Creating instances for demonstration
         TaskManager taskManager = new TaskManager();

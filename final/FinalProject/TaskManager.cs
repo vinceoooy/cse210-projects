@@ -1,42 +1,38 @@
-// TaskManager class to manage tasks, users, and categories
+// TaskManager class to manage _tasks, _users, and _categories
 public class TaskManager
 {
-    private List<Task> tasks;
-    private List<User> users;
-    private List<Category> categories;
+    private List<Task> _tasks;
+    private List<User> _users;
+    private List<Category> _categories;
 
     public TaskManager()
     {
-        tasks = new List<Task>();
-        users = new List<User>();
-        categories = new List<Category>();
+        _tasks = new List<Task>();
+        _users = new List<User>();
+        _categories = new List<Category>();
     }
 
     public void AddTask(Task task)
     {
-        tasks.Add(task);
+        _tasks.Add(task);
     }
 
     public void AddUser(User user)
     {
-        users.Add(user);
+        _users.Add(user);
     }
 
     public void AddCategory(Category category)
     {
-        categories.Add(category);
+        _categories.Add(category);
     }
 
-    // Example method to display all tasks with details
+    // Example method to display all _tasks with details
     public void DisplayAllTasks()
     {
-        foreach (var task in tasks)
+        foreach (var task in _tasks)
         {
-            Console.WriteLine($"Title: {task.Title}");
-            Console.WriteLine($"Description: {task.Description}");
-            Console.WriteLine($"Due Date: {task.DueDate}");
-            Console.WriteLine($"Priority: {task.Priority}");
-            Console.WriteLine("---------------");
+            task.DisplayDetails(); // Using polymorphism to display details based on the actual object type
         }
     }
 }
